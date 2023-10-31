@@ -12,34 +12,37 @@ public class HibernateUtils {
 
     private static SessionFactory sessionFactory;
     //uygulama çalıştığında config yapılsın
-
-    static {
+    static{
         try {
-            Configuration config = new Configuration().configure("hibernate.cfgxml").
-                    addAnnotatedClass(Hotel.class).
-                    addAnnotatedClass(Room.class).
-                    addAnnotatedClass(Reservation.class).
-                    addAnnotatedClass(Guest.class);
-            sessionFactory = config.buildSessionFactory();
+            Configuration config = new Configuration().
+                    configure("hibernate.cfg.xml").//parametre zorunlu değil
+                            addAnnotatedClass(Hotel.class).
+                    addAnnotatedClass(Room.class);
+            //  addAnnotatedClass(Reservation.class).
+            //  addAnnotatedClass(Guest.class);
 
-        } catch (Exception e) {
+            sessionFactory = config.buildSessionFactory();
+        }catch (Exception e){
             System.err.println("Initial Session Factory is failed!");
         }
     }
 
-    public static SessionFactory getSessionFactory() {
+    public static SessionFactory getSessionFactory(){
         return sessionFactory;
     }
 
     //sf kapatalım
-    public static void shutDown() {
+    public static void shutDown(){
         getSessionFactory().close();
     }
 
     //sessionı da kapatalım
-    public static void closeSession(Session session) {
-        if (session != null && session.isOpen()) {
+    public static void closeSession(Session session){
+        if (session!=null && session.isOpen()){
             session.close();
         }
     }
+
+
+
 }
