@@ -91,6 +91,10 @@ public class HotelManagementSystem {
                     hotelService.findHotelById(id);
                     break;
                 case 3:
+                    System.out.println("Enter hotel ID to delete : ");
+                    Long hotelid= scanner.nextLong();
+                    scanner.nextLine();
+                    hotelService.deleteHotelById(hotelid);
 
                     break;
                 case 4:
@@ -98,7 +102,10 @@ public class HotelManagementSystem {
                     hotelService.findAllHotels();
                     break;
                 case 5:
-
+                    System.out.println("Enter hotel ID to update: ");
+                    Long updateId= scanner.nextLong();
+                    scanner.nextLine();
+                    hotelService.updateHotelById(updateId);
                     break;
                 case 0:
                     exit = true;
@@ -225,3 +232,8 @@ public class HotelManagementSystem {
     }
 
 }
+/*
+ÖDEV:
+room delete
+guest,reservation:findById,findAll
+ */

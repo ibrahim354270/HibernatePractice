@@ -20,7 +20,7 @@ public class Guest {
   private LocalDateTime createDate;
 
   //TODO:reservationdan maplenecek
-  @OneToMany
+  @OneToMany(mappedBy = "t_guest",orphanRemoval = true)
   private List<Reservation> reservations=new ArrayList<>();
 
   @PrePersist

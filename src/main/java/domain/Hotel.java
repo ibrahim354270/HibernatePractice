@@ -17,7 +17,7 @@ public class Hotel {//one
     private String location;
 
     //TODO: one-to-many
-    @OneToMany(mappedBy = "hotel",fetch = FetchType.EAGER)//3. tablo oluşturma sadece room classından roomları ekle.
+    @OneToMany(mappedBy = "hotel",cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)//3. tablo oluşturma sadece room classından roomları ekle.
     // mapped by = Room classında ki hotel değeri set edildiğinde gel buraya set et.
     private List<Room> rooms=new ArrayList<>();
 

@@ -3,8 +3,10 @@ package service;
 import domain.Hotel;
 import domain.Room;
 import exceptions.HotelNotFoundException;
+import exceptions.RoomNotFoundException;
 import repository.RoomRepository;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class RoomService {
@@ -53,5 +55,35 @@ public class RoomService {
 
         //findRoomById:ÖDEV
         //findAllRooms:ÖDEV
+        public Room findRoomById(Long id) {
+            try {
+                Room foundRoom = roomRepository.findRoomById(id);
+                if (foundRoom != null) {
+                    System.out.println("---------------------------------");
+                    System.out.println(foundRoom);
+
+                    return foundRoom;
+                } else {
+                    throw new RoomNotFoundException(" Room  not found with ID: " + id);
+                }
+            } catch (RoomNotFoundException e) {
+                System.out.println(e.getMessage());
+                return null;
+            }
+        }
+
+
+    public List<Room> findAllRooms() {
+
+        List<Room> rooms = roomRepository.findAllRoom();
+        if (!rooms.isEmpty()) {
+            for (Room room : rooms) {
+                System.out.println(room);
+            }
+        } else {
+            throw new RuntimeException("No rooms found.");
+        }
+        return rooms;
+    }
 
 }
