@@ -68,6 +68,8 @@ public class HotelService {
         }
         return hotelList;
     }
+
+
     public void deleteHotelById(Long id) {
         //idsi verilen hotelı bulalım
         Hotel foundHotel=findHotelById(id);
@@ -85,6 +87,8 @@ public class HotelService {
 
         }
     }
+
+
     public void updateHotelById(Long id) {
         Hotel existingHotel=findHotelById(id);
         if (existingHotel!=null){
@@ -98,4 +102,6 @@ public class HotelService {
             System.out.println("Hotel is updated successfully...");
         }
     }
+
 }
+

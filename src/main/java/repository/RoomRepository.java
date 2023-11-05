@@ -30,6 +30,7 @@ public class RoomRepository {
     public Room findRoomById(Long roomId) {
         session = HibernateUtils.getSessionFactory().openSession();
         Room room=session.get(Room.class, roomId);
+        HibernateUtils.closeSession(session);
         return room;
     }
 
@@ -42,6 +43,21 @@ public class RoomRepository {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }finally {
+            HibernateUtils.closeSession(session);
+        }
+    }
+
+    public void deleteById(Room room ) {
+        try {
+            session = HibernateUtils.getSessionFactory().openSession();
+            Transaction transaction = session.beginTransaction();
+            session.delete(room);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            HibernateUtils.closeSession(session);
         }
     }
 

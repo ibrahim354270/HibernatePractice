@@ -2,24 +2,36 @@ package domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+
 @Entity
-@Table(name = "t_rezervation")
+@Table(name = "t_reservation")
 public class Reservation {
 
-    //TODO:otomatik generate edilsin
 
     @Id
+    @GeneratedValue(generator = "seq",strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "seq",
+            sequenceName = "reservation_id_seq",
+            initialValue = 1000,
+            allocationSize = 5)
     private Long id;
+
     @Column(nullable = false)
     private LocalDate checkIn;
+
     @Column(nullable = false)
     private LocalDate checkOut;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)//opsiyonel
-    private Guest quest;
+    private Guest guest;
+
     @ManyToOne
-    @JoinColumn(nullable = false)//opsiyonel
+    @JoinColumn(nullable = false)
     private Room room;
+
+    //getter-setter
+
 
     public Long getId() {
         return id;
@@ -45,12 +57,12 @@ public class Reservation {
         this.checkOut = checkOut;
     }
 
-    public Guest getQuest() {
-        return quest;
+    public Guest getGuest() {
+        return guest;
     }
 
-    public void setQuest(Guest quest) {
-        this.quest = quest;
+    public void setGuest(Guest guest) {
+        this.guest = guest;
     }
 
     public Room getRoom() {

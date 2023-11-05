@@ -1,9 +1,13 @@
 package controller;
 
 import config.HibernateUtils;
+import repository.GuestRepository;
 import repository.HotelRepository;
+import repository.ReservationRepository;
 import repository.RoomRepository;
+import service.GuestService;
 import service.HotelService;
+import service.ReservationService;
 import service.RoomService;
 
 import java.util.Scanner;
@@ -18,6 +22,12 @@ public class HotelManagementSystem {
 
         RoomRepository roomRepository=new RoomRepository();
         RoomService roomService=new RoomService(roomRepository,hotelService);
+
+        GuestRepository guestRepository=new GuestRepository();
+        GuestService guestService=new GuestService(guestRepository);
+
+        ReservationRepository reservationRepository=new ReservationRepository();
+        ReservationService reservationService=new ReservationService(reservationRepository,guestService,roomService);
 
         boolean exit=false;
 
@@ -41,10 +51,10 @@ public class HotelManagementSystem {
                     displayRoomOperationsMenu(roomService);
                     break;
                 case 3:
-                    displayGuestOperationsMenu();
+                    displayGuestOperationsMenu(guestService);
                     break;
                 case 4:
-                    displayReservationOperationsMenu();
+                    displayReservationOperationsMenu(reservationService);
                     break;
                 case 0:
                     exit=true;
@@ -91,11 +101,10 @@ public class HotelManagementSystem {
                     hotelService.findHotelById(id);
                     break;
                 case 3:
-                    System.out.println("Enter hotel ID to delete : ");
+                    System.out.println("Enter hotel ID to delete: ");
                     Long hotelid= scanner.nextLong();
                     scanner.nextLine();
                     hotelService.deleteHotelById(hotelid);
-
                     break;
                 case 4:
                     //get all hotels
@@ -105,7 +114,9 @@ public class HotelManagementSystem {
                     System.out.println("Enter hotel ID to update: ");
                     Long updateId= scanner.nextLong();
                     scanner.nextLine();
+
                     hotelService.updateHotelById(updateId);
+
                     break;
                 case 0:
                     exit = true;
@@ -140,10 +151,19 @@ public class HotelManagementSystem {
                     roomService.saveRoom();
                     break;
                 case 2:
+                    System.out.println("Enter room ID: ");
+                    Long id= scanner.nextLong();
+                    scanner.nextLine();
+                    roomService.findRoomById(id);
                     break;
                 case 3:
+                    System.out.print("Enter the room ID to delete: ");
+                    Long roomIdToDelete = scanner.nextLong();
+                    scanner.nextLine();
+                    roomService.deleteRoomById(roomIdToDelete);
                     break;
                 case 4:
+                    roomService.findAllRooms();
                     break;
                 case 0:
                     exit = true;
@@ -157,7 +177,7 @@ public class HotelManagementSystem {
     }
 
     //guest operations
-    private static void displayGuestOperationsMenu() {
+    private static void displayGuestOperationsMenu(GuestService guestService) {
         System.out.println("GuestOperationMenu");
 
         boolean exit = false;
@@ -171,16 +191,26 @@ public class HotelManagementSystem {
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
+                    //save guest
+                    guestService.saveGuest();
                     break;
                 case 2:
+                    System.out.print("Enter the Guest ID :");
+                    Long guestId = scanner.nextLong();
+                    guestService.findGuestById(guestId);
                     break;
                 case 3:
+                    //delete ÖDEV
+                    System.out.print("Enter the Guest ID to delete:");
+                    Long id = scanner.nextLong();
+                    guestService.deleteGuestById(id);
                     break;
                 case 4:
+                    guestService.findAllGuest();
                     break;
                 case 0:
                     exit = true;
@@ -193,7 +223,7 @@ public class HotelManagementSystem {
     }
 
     //reservation operations
-    private static void displayReservationOperationsMenu() {
+    private static void displayReservationOperationsMenu(ReservationService reservationService) {
         System.out.println("ReservationOperationMenu");
 
         boolean exit = false;
@@ -207,18 +237,30 @@ public class HotelManagementSystem {
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
+                    //save reservation
+                    reservationService.saveReservation();
                     break;
                 case 2:
+                    System.out.print("Enter the reservation ID: ");
+                    Long reservationId = scanner.nextLong();
+                    scanner.nextLine();
+
+                    reservationService.findReservationById(reservationId);
                     break;
                 case 3:
+                    reservationService.findAllReservations();
                     break;
                 case 4:
+                    //delete ÖDEV
+                    System.out.print("Enter the reservation ID to delete: ");
+                    Long id=scanner.nextLong();
+                    scanner.nextLine();
+                    reservationService.deleteReservationById(id);
                     break;
-
                 case 0:
                     exit = true;
                     break;
@@ -232,8 +274,3 @@ public class HotelManagementSystem {
     }
 
 }
-/*
-ÖDEV:
-room delete
-guest,reservation:findById,findAll
- */

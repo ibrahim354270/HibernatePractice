@@ -53,24 +53,23 @@ public class RoomService {
 
     }
 
-        //findRoomById:ÖDEV
-        //findAllRooms:ÖDEV
-        public Room findRoomById(Long id) {
-            try {
-                Room foundRoom = roomRepository.findRoomById(id);
-                if (foundRoom != null) {
-                    System.out.println("---------------------------------");
-                    System.out.println(foundRoom);
 
-                    return foundRoom;
-                } else {
-                    throw new RoomNotFoundException(" Room  not found with ID: " + id);
-                }
-            } catch (RoomNotFoundException e) {
-                System.out.println(e.getMessage());
-                return null;
+    public Room findRoomById(Long id) {
+        try {
+            Room foundRoom = roomRepository.findRoomById(id);
+            if (foundRoom != null) {
+                System.out.println("---------------------------------");
+                System.out.println(foundRoom);
+                System.out.println("---------------------------------");
+                return foundRoom;
+            } else {
+                throw new RoomNotFoundException(" Room  not found with ID: " + id);
             }
+        } catch (RoomNotFoundException e) {
+            System.out.println(e.getMessage());
+            return null;
         }
+    }
 
 
     public List<Room> findAllRooms() {
@@ -81,9 +80,19 @@ public class RoomService {
                 System.out.println(room);
             }
         } else {
-            throw new RuntimeException("No rooms found.");
+            System.out.println("No rooms found!");
         }
         return rooms;
+    }
+
+    public void deleteRoomById(Long id) {
+        Room existingRoom =findRoomById(id);
+        if (existingRoom == null) {
+            throw new RoomNotFoundException("Room not found with ID: " + id);
+        }
+
+        roomRepository.deleteById(existingRoom);
+        System.out.println("Room  deleted successfully. ID: " + id);
     }
 
 }

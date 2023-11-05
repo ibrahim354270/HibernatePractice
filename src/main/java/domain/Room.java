@@ -9,28 +9,26 @@ import java.util.List;
 public class Room {//many(hotel)
 
     @Id
-    private Long id;
+    private Long id;//1
 
     @Column(nullable = false)
-    private String number;
+    private String number;//A101
     @Column(nullable = false)
-    private int capacity;
+    private int capacity;//2
 
     @ManyToOne//room tablosunda FK:hotel_id
     @JoinColumn(name = "hotel_id",nullable = false)//opsiyonel
-    private Hotel hotel;
+    private Hotel hotel;//11 idli
 
-    //TODO: one-to-many
     //OneToMany ilişkide 1 obje Çok(many) obje ile ilişkili old.
     //ilişki tek sütunda kurulamaz.
     // OneToMany ann. ilişkinin kurulması için
     // tek bir sütun(FK) yeterli olmadığından 3. tablo oluşturur.
     //Çift yönlü OnetoMany-ManyToOne kullanılmışsa
     //ManyToOne tarafında ilişki kurulur.
-    //OneToMany de sadece değerler maplenir.
-    // manytomany bire karşı birden fazla değer geldiği için 3. tablo oluşuyor
-    @OneToMany(mappedBy = "room",orphanRemoval = true, fetch = FetchType.EAGER)//3. tablo oluşturma //room silinecekse rezervazyonları da otomatik sil
-   private List<Reservation> reservations=new ArrayList<>();
+    //OneToManyde sadece değerler maplenir.
+    @OneToMany(mappedBy = "room",orphanRemoval = true,fetch = FetchType.EAGER)
+    private List<Reservation> reservations=new ArrayList<>();
 
     //default const
     public Room() {
@@ -44,7 +42,8 @@ public class Room {//many(hotel)
         this.hotel = hotel;
     }
 
-        //getter-setter
+    //getter-setter
+
 
     public Long getId() {
         return id;
@@ -78,13 +77,13 @@ public class Room {//many(hotel)
         this.hotel = hotel;
     }
 
-           public List<Reservation> getReservations() {
-                return reservations;
-            }
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
 
-            public void setReservations(List<Reservation> reservations) {
-                this.reservations = reservations;
-            }
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
 
     //toString
     @Override

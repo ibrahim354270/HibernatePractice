@@ -10,63 +10,57 @@ import java.util.List;
 public class Guest {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-  @Embedded
-  private Address address;
+    @Embedded
+    private Address address;
 
-  private LocalDateTime createDate;
+    private LocalDateTime createDate;
 
-  //TODO:reservationdan maplenecek
-  @OneToMany(mappedBy = "t_guest",orphanRemoval = true)
-  private List<Reservation> reservations=new ArrayList<>();
 
-  @PrePersist
-  public void prePersist(){
-      this.createDate=LocalDateTime.now();
-  }
+    @OneToMany(mappedBy = "guest",orphanRemoval = true)
+    private List<Reservation> reservations=new ArrayList<>();
 
-  public Long getId() {
-      return id;
-  }
+    @PrePersist
+    public void prePersist(){
+        this.createDate=LocalDateTime.now();
+    }
 
-  public void setId(Long id) {
-      this.id = id;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  public String getName() {
-      return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setName(String name) {
-      this.name = name;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public Address getAddress() {
-      return address;
-  }
+    public Address getAddress() {
+        return address;
+    }
 
-  public void setAddress(Address address) {
-      this.address = address;
-  }
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
-  public LocalDateTime getCreateDate() {
-      return createDate;
-  }
+    public LocalDateTime getCreateDate() {
+        return createDate;
+    }
 
-  public void setCreateDate(LocalDateTime createDate) {
-      this.createDate = createDate;
-  }
 
-  public List<Reservation> getReservations() {
-      return reservations;
-  }
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
 
-  public void setReservations(List<Reservation> reservations) {
-      this.reservations = reservations;
-  }
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
 
     @Override
     public String toString() {

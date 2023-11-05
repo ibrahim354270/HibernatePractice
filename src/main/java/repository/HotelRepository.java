@@ -25,7 +25,10 @@ public class HotelRepository {
         }finally {
             HibernateUtils.closeSession(session);
         }
+
+
     }
+
 
     public Hotel findById(Long id) {
 
@@ -56,35 +59,37 @@ public class HotelRepository {
     }
 
     public void deleteById(Hotel hotel) {
-        try{
+        try {
             session = HibernateUtils.getSessionFactory().openSession();
-            Transaction transaction = session.beginTransaction();
+            Transaction transaction=session.beginTransaction();
 
             session.delete(hotel);
 
             transaction.commit();
         }catch (HibernateException e){
             e.printStackTrace();
-
         }finally {
             HibernateUtils.closeSession(session);
         }
     }
 
+
     public void updateById(Hotel hotel) {
-        try{
+        try {
             session = HibernateUtils.getSessionFactory().openSession();
-            Transaction transaction = session.beginTransaction();
+            Transaction transaction=session.beginTransaction();
 
             session.update(hotel);
 
             transaction.commit();
         }catch (HibernateException e){
             e.printStackTrace();
-
         }finally {
             HibernateUtils.closeSession(session);
         }
     }
-    }
+
+
+
+
 }

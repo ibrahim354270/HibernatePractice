@@ -18,8 +18,8 @@ public class HibernateUtils {
                     configure("hibernate.cfg.xml").//parametre zorunlu değil
                             addAnnotatedClass(Hotel.class).
                     addAnnotatedClass(Room.class).
-                   addAnnotatedClass(Reservation.class).
-              addAnnotatedClass(Guest.class);
+                    addAnnotatedClass(Reservation.class).
+                    addAnnotatedClass(Guest.class);
 
             sessionFactory = config.buildSessionFactory();
         }catch (Exception e){
